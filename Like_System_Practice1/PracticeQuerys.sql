@@ -50,17 +50,32 @@ from reactions
 where type in ('like','dislike')
 group by post_id,type
 order by post_id
+
+select * from reactions where post_id = 1	
+	
 -- 4th: adding a distinc clouse and with condition = 2 , we now have the posts that
 --have both conditions (2 reactions in his case like and dislike reaction)
-select post_id,type,count(*) as n_reactions
-from reactions 
-where type in ('like','dislike')
-group by post_id,type
+-- select post_id,type,count(*) as n_reactions
+-- from reactions 
+-- where type in ('like','dislike')
+-- group by post_id,type
+-- having count (*) = 2
+-- order by post_id
+select p1.post_id 
+from (
+	select post_id,type,count(*)
+	from reactions 
+	where type in ('like','dislike')
+	group by post_id,type
+	order by post_id	
+)as p1
+group by p1.post_id
 having count (*) = 2
-order by post_id
 --Notes: 
 --1st You cannot use a alias in having clouse (having count (*) = 2)
 --2nd Order by is at the end
+
+
 
 
 
