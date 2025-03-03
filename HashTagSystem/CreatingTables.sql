@@ -1,0 +1,18 @@
+CREATE TABLE hashtags (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE posts (
+    id SERIAL PRIMARY KEY,
+    url VARCHAR(255) NOT NULL,
+    user_id INTEGER NOT NULL
+);
+
+CREATE TABLE hashtags_posts (
+    id SERIAL PRIMARY KEY,
+    hashtag_id INTEGER NOT NULL,
+    post_id INTEGER NOT NULL,
+    FOREIGN KEY (hashtag_id) REFERENCES hashtags(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES posts(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
