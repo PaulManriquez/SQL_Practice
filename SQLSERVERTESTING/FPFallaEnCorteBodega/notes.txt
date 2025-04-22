@@ -1,0 +1,25 @@
+==Enable bulk data to sqlserver
+# Give read permissions to the file for everyone (be careful with this in a shared system)
+sudo chmod 644 /home/paul22/Desktop/SQLSERVERTESTING/FPFallaEnCorteBodega/first/cTablaOrigen.txt
+# Change the file's group to mssql
+sudo chown :mssql /home/paul22/Desktop/SQLSERVERTESTING/FPFallaEnCorteBodega/first/cTablaOrigen.txt
+
+# Give read permission to the group
+sudo chmod 640 /home/paul22/Desktop/SQLSERVERTESTING/FPFallaEnCorteBodega/first/cTablaOrigen.txt
+
+#Verify the permitions must like see like this 
+ls -l /home/paul22/Desktop/SQLSERVERTESTING/FPFallaEnCorteBodega/first/cTablaOrigen.txt
+-rw-r----- 1 paul22 mssql 53 abr 22 12:44 cTablaOrigen.txt
+
+#Server easy access for txt
+sudo mv /home/paul22/Desktop/SQLSERVERTESTING/FPFallaEnCorteBodega/first/cTablaOrigen.txt /var/opt/mssql/data/
+
+#Now you can perform bulk data 
+sudo chmod 644 /var/opt/mssql/data/cTablaOrigen.txt
+
+#
+BULK INSERT YourTable
+FROM '/var/opt/mssql/data/cTablaOrigen.txt'
+WITH (FIELDTERMINATOR = ',', ROWTERMINATOR = '\n');
+
+
